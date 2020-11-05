@@ -1,33 +1,53 @@
 import Vue from 'vue'
+
 const localVue = new Vue()
 export default {
-    namespaced: true,
-    state: {
-      isLogin: false,
-    },
-    actions: {
-        async ['REFRESH_TOKEN'](){
-            const result = await localVue.$API.post.RefreshToken()
-            localStorage.setItem('ACCESS_TOKEN', result)
-            console.log(result)
-        },
-        async ['LOGIN'] ({state},payload){
-          console.log(localVue,this,payload,'HERE')
-          const result = await localVue.$API.post.LoginCheck(payload)
-          state.isLogin = true
-          console.log(result,'hope')
-            return result;
-        },
-        async ['LOGOUT'] ({state}){
-          const result = await localVue.$API.post.Logout()
-          console.log(result)
-          localStorage.remove('ACCESS_TOKEN')
-          state.isLogin = false
-        },
-        async ['REGISTER'] ({commit},payload){
-          const result = await localVue.$API.post.SignUp(payload)
-          console.log(result,commit)
-            return result;
-        },
-    },
+	namespaced: true,
+	state: {
+		isLogin: false,
+	},
+	actions: {
+		async ['REFRESH_TOKEN']() {
+			const result = await localVue.$API.post.RefreshToken()
+			localStorage.setItem('ACCESS_TOKEN', result)
+			console.log(result)
+		},
+		async ['LOGIN']({ state }, payload) {
+			try {
+				const result = await localVue.$API.post.LoginCheck(payload)
+				state.isLogin = true
+				return result
+			} catch (e) {
+				console.log(e)
+				throw e
+			}
+		},
+		async ['LOGOUT']({ state }) {
+			try {
+				await localVue.$API.post.Logout()
+				state.isLogin = false
+				localStorage.remove('ACCESS_TOKEN')
+			} catch (e) {
+				console.log(e)
+			}
+		},
+		async ['REGISTER']({ commit }, payload) {
+			const result = await localVue.$API.post.SignUp(payload)
+			console.log(result, commit)
+			return result
+		},
+	},
+	mutations: {
+		setToken(state) {
+			if (localStorage.getItem('ACCESS_TOKEN')) {
+				state.isLogin = true
+			}
+		}
+	},
+	getters: {
+		isLoggedIn(state) {
+			console.log(state.isLogin)
+			return state.isLogin
+		}
+	}
 }

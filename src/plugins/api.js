@@ -5,9 +5,8 @@ axios.defaults.baseURL = 'http://crud.loc/api/'
 if(localStorage.getItem('ACCESS_TOKEN')!==null)
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('ACCESS_TOKEN');
 const API = {
-    token:{
-    },
-    auth: {
+    get:{
+        AllTasks:()=>axios.get('/all-tasks')
     },
     post: {
         LoginCheck:(data)=>axios.post('/login',data),

@@ -5,6 +5,7 @@ import auth from './modules/auth'
 export const DELETE_TASK = 'delete/task'
 export const UPDATE_TASK_PLACE = 'update/task_place'
 export const UPDATE_TASK_STATE = 'update/task_state'
+export const GET_TASKS = 'get/AllTasks'
 const localVue = new Vue()
 Vue.use(Vuex)
 
@@ -54,12 +55,16 @@ export default new Vuex.Store({
 				console.error(e)
 			}
 		},
+		async [GET_TASKS]({state}){
+			const result = await localVue.$API.get.AllTasks()
+			state.tasks = result.data
+		},
 		async [UPDATE_TASK_PLACE]({ state }) {
-			console.log(state, 'TEST DISPATCH')
+			// eslint-disable-next-line no-useless-catch
 			try {
 				await localVue.$API.patch.updateTaskPlace(state.taskChange)
 			} catch (e) {
-				console.error(e)
+				throw e
 			}
 		},
 		async [UPDATE_TASK_STATE]({ commit, getters }, data) {
@@ -85,7 +90,6 @@ export default new Vuex.Store({
 			}
 		},
 		[UPDATE_TASK_PLACE](state, { data, category }) {
-			// console.log(state,data,category,'Sldfjaslf')
 			if (data.added) {
 				console.log(data)
 				state.taskChange.element = data.added.element

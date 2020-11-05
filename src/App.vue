@@ -5,11 +5,25 @@
   </div>
 </template>
 <script>
+import {GET_TASKS} from '@/store'
 export default {
+  created() {
+    this.$store.commit('auth/setToken')
+  },
+  // async mounted(){
+  //   try {
+  //     await this.$store.dispatch(GET_TASKS)
+  //   }catch (e) {
+  //     console.error(e)
+  //   }
+  // },
   components:{
     'Header': ()=> import('@/components/Header')
   },
-  name: "App"
+  name: "App",
+  data:()=>({
+    GET_TASKS:GET_TASKS
+  })
 }
 
 </script>
