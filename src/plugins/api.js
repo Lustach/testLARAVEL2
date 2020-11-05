@@ -16,10 +16,13 @@ const API = {
         Logout:()=> axios.post('/logout'),
     },
     patch: {
-        deleteTask:(data) =>axios.patch(`/deleteTask?category=${data.categoryId}&task=${data.index}`),
         updateTaskPlace: (data) => axios.patch(`/updateTask_place`, data),
-        updateTask: (data) =>axios.patch(`/updateTask?category=${data.categoryId}&task=${data.index}`,data.task)
+        updateTask: (data) =>axios.patch(`/updateTask?id=${data.id}`,data.task)
+        // updateTask: (data) =>axios.patch(`/updateTask?category=${data.categoryId}&task=${data.index}`,data.task)
     },
+    delete:{
+        deleteTask:(data) =>axios.delete(`/deleteTask?id=${data.id}`),
+    }
 }
 
 export default {

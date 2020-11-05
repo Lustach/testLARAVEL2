@@ -48,7 +48,7 @@ export default new Vuex.Store({
 	actions: {
 		async [DELETE_TASK]({ commit, getters }, data) {
 			try {
-				await localVue.$API.patch.deleteTask(data)
+				await localVue.$API.delete.deleteTask(data)
 				commit(DELETE_TASK, { data, getters })
 			} catch (e) {
 				console.error(e)

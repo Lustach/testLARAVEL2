@@ -12,7 +12,7 @@ export default {
             console.log(result)
         },
         async ['LOGIN'] ({state},payload){
-            console.log(localVue,this,payload,'HERE')
+          console.log(localVue,this,payload,'HERE')
           const result = await localVue.$API.post.LoginCheck(payload)
           state.isLogin = true
           console.log(result,'hope')

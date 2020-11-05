@@ -7,7 +7,7 @@
           <b-form-group id="input-group-1" label="Ваше имя:" label-for="input-1">
             <b-form-input
                 id="input-1"
-                v-model="form.userName"
+                v-model="form.name"
                 required
                 placeholder="Введите имя"
             ></b-form-input>
@@ -46,7 +46,7 @@ export default {
   data: () => ({
     form: {
       password: '',
-      userName: '',
+      name: '',
     },
     show: true
   }),
@@ -55,7 +55,7 @@ export default {
       try {
         const result = await this.$store.dispatch('REGISTER', this.form)
         console.log(result)
-        localStorage.setItem('ACCESS_TOKEN', result.token)
+        localStorage.setItem('ACCESS_TOKEN', result.data.token)
       } catch (e) {
         console.error(e)
       }

@@ -1,6 +1,6 @@
 <template>
   <b-card :title="data.title || 'Заголовок'">
-    <draggable :list="data.tasks" class="px-4" group="tasks" @change="onChange" @remove="onRemove">
+    <draggable :list="data.tasks" class="px-4" group="tasks" @change="onChange">
       <b-card-text v-for="(e,i) in data.tasks" :key="i" class="py-0 mb-2 test">
         <b-row class="d-flex align-center">
           <b-col class="d-flex flex-row align-center" cols="12">
@@ -48,20 +48,6 @@ export default {
         console.log(e, this.data.title)
         this.$store.commit(UPDATE_TASK_PLACE, { data: e, category: this.data.title })
       }
-    },
-    onRemove(e){
-      console.log(e)
-    },
-    deleteOneTask(index, category) {
-      if (this.$route.params.id)
-        this.$store.dispatch(this.DELETE_TASK, {categoryId: this.$route.params.id, index: index})
-      else {
-        this.$store.dispatch(this.DELETE_TASK, {categoryId: category, index: index})
-      }
-    },
-    changeState(index) {
-      this.data.tasks[index].state = !this.data.tasks[index].state
-      this.$set(this.data.tasks, index, this.data.tasks[index])
     },
     openTask(index, category) {
       if (this.$route.name === 'TaskAbout')

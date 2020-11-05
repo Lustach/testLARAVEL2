@@ -28,12 +28,13 @@ export default {
   }),
   methods:{
     async deleteOneTask(){
-      await this.$store.dispatch(this.DELETE_TASK, { categoryId: this.$route.params.id, index: this.$route.params.name })
+      await this.$store.dispatch(this.DELETE_TASK, { categoryId: this.$route.params.id, index: this.$route.params.name,id: this.taskInfo.id })
       this.$router.go(-1)
     },
     async saveUpdates(){
       try {
-        await this.$store.dispatch(this.UPDATE_TASK_STATE, { task: this.taskInfo, categoryId: this.$route.params.id, index: this.$route.params.name })
+        // console.log(this.tasksByCategory(this.$route.))
+        await this.$store.dispatch(this.UPDATE_TASK_STATE, { task: this.taskInfo, categoryId: this.$route.params.id, index: this.$route.params.name,id: this.taskInfo.id })
         console.log('hello')
         this.$set(this.taskInfo, 'title', this.tempState)
         this.$router.go(-1)
