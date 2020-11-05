@@ -41,6 +41,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Login',
   data: () => ({
@@ -53,9 +54,10 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        const result = await this.$store.dispatch('REGISTER', this.form)
+        const result = await this.$store.dispatch('auth/REGISTER', this.form)
         console.log(result)
         localStorage.setItem('ACCESS_TOKEN', result.data.token)
+        await this.$router.push('/')
       } catch (e) {
         console.error(e)
       }

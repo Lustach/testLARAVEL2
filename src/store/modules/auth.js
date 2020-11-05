@@ -16,6 +16,7 @@ export default {
           const result = await localVue.$API.post.LoginCheck(payload)
           state.isLogin = true
           console.log(result,'hope')
+            return result;
         },
         async ['LOGOUT'] ({state}){
           const result = await localVue.$API.post.Logout()
@@ -26,6 +27,7 @@ export default {
         async ['REGISTER'] ({commit},payload){
           const result = await localVue.$API.post.SignUp(payload)
           console.log(result,commit)
+            return result;
         },
     },
 }

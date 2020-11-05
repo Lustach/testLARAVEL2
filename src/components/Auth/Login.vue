@@ -45,6 +45,7 @@ export default {
       try {
         const result = await this.$store.dispatch("auth/LOGIN", this.form)
         console.log(result, 'result')
+        localStorage.setItem('ACCESS_TOKEN', result.data.token)
         await this.$router.push('/')
       } catch (e) {
         console.error(e)
