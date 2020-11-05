@@ -8,7 +8,7 @@
           <b-form-group id="input-group-2" label="Ваше имя:" label-for="input-2">
             <b-form-input
                 id="input-2"
-                v-model="form.userName"
+                v-model="form.name"
                 required
                 placeholder="Введите имя"
             ></b-form-input>
@@ -34,7 +34,7 @@ export default {
   data: () => ({
     form: {
       password: '',
-      userName: '',
+      name: '',
     },
 
     show: true
@@ -45,6 +45,7 @@ export default {
       try {
         const result = await this.$store.dispatch("auth/LOGIN", this.form)
         console.log(result, 'result')
+        await this.$router.push('/')
       } catch (e) {
         console.error(e)
       }
