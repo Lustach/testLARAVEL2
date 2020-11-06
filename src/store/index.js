@@ -57,7 +57,7 @@ export default new Vuex.Store({
 			}
 		},
 		async [GET_TASKS]({state}){
-			const result = await localVue.$API.get.AllTasks()
+			const result = await localVue.$API.get.AllTasks(state["auth/userLogin"])
 			state.tasks = result.data
 		},
 		async [UPDATE_TASK_PLACE]({ state }) {

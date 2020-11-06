@@ -5,6 +5,7 @@ export default {
 	namespaced: true,
 	state: {
 		isLogin: false,
+		userLogin: '',
 	},
 	actions: {
 		async ['REFRESH_TOKEN']() {
@@ -12,10 +13,11 @@ export default {
 			localStorage.setItem('ACCESS_TOKEN', result)
 			console.log(result)
 		},
-		async ['LOGIN']({ state }, payload) {
+		async ['LOGIN']({ state,commit }, payload) {
 			try {
 				const result = await localVue.$API.post.LoginCheck(payload)
 				state.isLogin = true
+				commit.setUser(result.data)
 				return result
 			} catch (e) {
 				console.log(e)
@@ -34,6 +36,7 @@ export default {
 		},
 		async ['REGISTER']({ state,commit }, payload) {
 			const result = await localVue.$API.post.SignUp(payload)
+			console.log(payload,'payloadFromREGISTER')
 			state.isLogin = true
 			console.log(result, commit)
 			return result
@@ -44,6 +47,10 @@ export default {
 			if (localStorage.getItem('ACCESS_TOKEN')) {
 				state.isLogin = true
 			}
+		},
+		setUser(state, data){
+			console.log(data,'loginSetUser')
+			state.userLogin = data
 		}
 	},
 	getters: {

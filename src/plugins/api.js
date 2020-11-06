@@ -6,7 +6,8 @@ if (localStorage.getItem('ACCESS_TOKEN') !== null)
 	axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
 const API = {
 	get: {
-		AllTasks: () => axios.get('/all-tasks')
+		AllTasks: (data) => axios.get(`/all-tasks/${data}`),
+		// user: ()=>axios.get('/userInfo')
 	},
 	post: {
 		LoginCheck: (data) => axios.post('/login', data),
