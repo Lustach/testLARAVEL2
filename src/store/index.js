@@ -13,30 +13,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		tasks: {
-			todo: {
-				title: 'Все задачи',
-				tasks: [
-					{ title: 'Переделать как в трелло', mark: 'Ну ', state: false, description: 'ОПИСАНИЕ ЗАДАЧИ' }, {
-						title: 'хопа',
-						mark: '1Ну ',
-						state: false,
-						description: 'ОПИСАНИЕ ЗАДАЧИ'
-					},
-					{ title: 'прихлопа', mark: 'Ну', state: false, description: 'ОПИСАНИЕ ЗАДАЧИ' }, { title: 'алеоп', mark: '1Ну ', state: false, description: 'ОПИСАНИЕ ЗАДАЧИ' },
-				],
-			},
-			progress: {
-				title: 'В процессе выполнения',
-				tasks: [
-					{ title: 'В процессе выполнения', mark: 'Ну ', description: 'ОПИСАНИЕ ЗАДАЧИ' }, { title: 'В процессе выполнения1', mark: '1Ну ', description: 'ОПИСАНИЕ ЗАДАЧИ' },
-				]
-			},
-			completed: {
-				title: 'Завершённые',
-				tasks: [
-					{ title: 'Завершённые', mark: 'Ну ', description: 'ОПИСАНИЕ ЗАДАЧИ' }, { title: 'Завершённые1', mark: '1Ну ', description: 'ОПИСАНИЕ ЗАДАЧИ' },
-				]
-			},
+
 		},
 		categories: ['Все задачи', 'В процессе выполнения', 'Завершённые'],
 		taskChange: {
@@ -68,9 +45,9 @@ export default new Vuex.Store({
 				throw e
 			}
 		},
-		async [UPDATE_TASK_STATE]({ commit, getters }, data) {
+		async [UPDATE_TASK_STATE]({ commit }, data) {
 			try {
-				console.log(commit, getters, data, 'helloWorld')
+				console.log(commit)
 				await localVue.$API.patch.updateTask(data)
 			} catch (e) {
 				console.error(e)
@@ -80,7 +57,6 @@ export default new Vuex.Store({
 		async [ADD_NEW_TASK] ({commit},data){
 			const result = await localVue.$API.post.addNewTask(data)
 			commit(ADD_NEW_TASK,{data, result})
-			console.log(commit,data,result)
 		}
 
 	},
@@ -98,7 +74,6 @@ export default new Vuex.Store({
 		},
 		[UPDATE_TASK_PLACE](state, { data, category }) {
 			if (data.added) {
-				console.log(data)
 				state.taskChange.element = data.added.element
 				state.taskChange.newIndex = data.added.newIndex
 				state.taskChange.addedTo = category
@@ -107,10 +82,8 @@ export default new Vuex.Store({
 				state.taskChange.removedFrom = category
 				this.dispatch(UPDATE_TASK_PLACE)
 			}
-			console.log(state.taskChange, 'stateTaskChange')
 		},
 		[ADD_NEW_TASK](state,{data,result}){
-			console.log(state,data,result,'HERE')
 			state.tasks[data.category].tasks.push({
 				title: data.title,
 				description: data.description,
@@ -118,7 +91,6 @@ export default new Vuex.Store({
 				id: result.data,
 				category: data.category
 			})
-			console.log(state.tasks[data.category],'afterADDNEWTASK')
 		}
 	},
 	modules: {
@@ -128,7 +100,6 @@ export default new Vuex.Store({
 		tasks: state => state.tasks,
 		categories: state => state.categories,
 		tasksByCategory: state => (id,getKey) => {
-			console.log(id,'id')
 			for (const key in state.tasks) {
 				if (state.tasks[key].title === id) {
 					if(getKey) return key

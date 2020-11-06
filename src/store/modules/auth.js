@@ -10,7 +10,6 @@ export default {
 		async ['REFRESH_TOKEN']() {
 			const result = await localVue.$API.post.RefreshToken()
 			localStorage.setItem('ACCESS_TOKEN', result)
-			console.log(result)
 		},
 		async ['LOGIN']({ state }, payload) {
 			try {
@@ -24,7 +23,6 @@ export default {
 		},
 		async ['LOGOUT']({ state }) {
 			try {
-				console.log('logout')
 				await localVue.$API.post.Logout()
 				state.isLogin = false
 				localStorage.remove('ACCESS_TOKEN')
@@ -32,10 +30,9 @@ export default {
 				console.log(e)
 			}
 		},
-		async ['REGISTER']({ state,commit }, payload) {
+		async ['REGISTER']({ state }, payload) {
 			const result = await localVue.$API.post.SignUp(payload)
 			state.isLogin = true
-			console.log(result, commit)
 			return result
 		},
 	},
@@ -48,7 +45,6 @@ export default {
 	},
 	getters: {
 		isLoggedIn(state) {
-			console.log(state.isLogin)
 			return state.isLogin
 		}
 	}

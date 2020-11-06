@@ -1,6 +1,5 @@
 <template>
   <b-card :title="data.title || 'Заголовок'">
-    {{data}}
     <draggable :list="data.tasks" class="px-4" group="tasks" @change="onChange">
       <b-card-text v-for="(e,i) in data.tasks" :key="i" class="py-0 mb-2 test">
         <b-row class="d-flex align-center">
@@ -47,7 +46,6 @@ export default {
   methods: {
     onChange(e){
       if(e.added || e.removed) {
-        console.log(e, this.data.title)
         this.$store.commit(UPDATE_TASK_PLACE, { data: e, category: this.data.title })
       }
     },
