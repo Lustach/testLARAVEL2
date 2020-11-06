@@ -4,49 +4,54 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/main'
-  },
-  {
-    path: '/main',
-    name: 'Main',
-    component: () => import('../components/HelloWorld.vue')
-  },
-  {
-    path: '/categoryList',
-    name: 'CategoryList',
-    component: () => import('../views/CategoryList.vue')
-  },
-  {
-    path: '/tasks_by_category=:id/title=:name',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/tasks_by_category=:id',
-    name: 'TaskAbout',
-    component: () => import(/* webpackChunkName: "about" */ '../views/TaskAbout.vue')
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../components/Auth/Login.vue')
-  },
-  {
-    path: '/signUp',
-    name: 'SignUp',
-    component: () => import('../components/Auth/SignUp.vue')
-  },
+	{
+		path: '/',
+		redirect: '/main'
+	},
+	{
+		path: '/main',
+		name: 'Main',
+		component: () => import('../components/HelloWorld.vue')
+	},
+	{
+		path: '/categoryList',
+		name: 'CategoryList',
+		component: () => import('../views/CategoryList.vue')
+	},
+	{
+		path: '/tasks_by_category=:id/title=:name',
+		name: 'About',
+		component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+	},
+	{
+		path: '/tasks_by_category=:id',
+		name: 'TaskAbout',
+		component: () => import(/* webpackChunkName: "about" */ '../views/TaskAbout.vue')
+	},
+	{
+		path: '/login',
+		name: 'Login',
+		component: () => import('../components/Auth/Login.vue')
+	},
+	{
+		path: '/signUp',
+		name: 'SignUp',
+		component: () => import('../components/Auth/SignUp.vue')
+	},
 
 ]
 
 
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 })
 
 export default router
+
+router.beforeEach((to, from, next) => {
+	if (to.name !== 'login' && !this.$store.getters["auth/isLoggedIn"]) next({ name: 'login' })
+	else next()
+})
