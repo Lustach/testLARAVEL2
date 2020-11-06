@@ -33,7 +33,8 @@ export default new Vuex.Store({
 		},
 		async [GET_TASKS]({ state }) {
 			const result = await localVue.$API.get.AllTasks()
-			state.tasks = result.data
+			this.$set(state,'tasks',result.data)
+			// state.tasks = result.data
 		},
 		async [UPDATE_TASK_PLACE]({ state }) {
 			// eslint-disable-next-line no-useless-catch
