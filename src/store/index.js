@@ -115,7 +115,8 @@ export default new Vuex.Store({
 				title: data.title,
 				description: data.description,
 				state: data.state,
-				id: result.data.id
+				id: result.data,
+				category: data.category
 			})
 			console.log(state.tasks[data.category],'afterADDNEWTASK')
 		}

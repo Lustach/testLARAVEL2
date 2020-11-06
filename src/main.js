@@ -30,6 +30,11 @@ Vue.use(Api)
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+	if (to.name !== 'login' && !this.$store.getters["auth/isLoggedIn"]) next({ name: 'login' })
+	else next()
+})
+
 new Vue({
 	router,
 	store,
