@@ -11,11 +11,11 @@ export default {
 			const result = await localVue.$API.post.RefreshToken()
 			localStorage.setItem('ACCESS_TOKEN', result)
 		},
-		async ['LOGIN']({ state }, payload) {
+		async ['LOGIN']({ commit },payload) {
 			try {
 				const result = await localVue.$API.post.LoginCheck(payload)
-				state.isLogin = true
-				return result
+				localStorage.setItem('ACCESS_TOKEN', result.data.token)
+				commit('setToken')
 			} catch (e) {
 				console.log(e)
 				throw e

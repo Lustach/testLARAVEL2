@@ -33,7 +33,7 @@ export default new Vuex.Store({
 		},
 		async [GET_TASKS]({ state }) {
 			const result = await localVue.$API.get.AllTasks()
-			this.$set(state,'tasks',result.data)
+			Vue.set(state,'tasks',result.data)
 			// state.tasks = result.data
 		},
 		async [UPDATE_TASK_PLACE]({ state }) {
