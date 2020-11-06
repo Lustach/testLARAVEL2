@@ -2,9 +2,6 @@
   <div class="d-flex flex-column">
     <h1 v-if="taskInfo">Информация о задаче</h1>
     <h1 v-else>Добавление задачи</h1>
-    {{ taskInfo }}fdas
-    {{ tempState }}
-    {{tempState === taskInfo}}
     <b-card style="max-width: 500px;" v-if="tempState" class="d-flex align-self-center">
       <b-card-text>
         <b-row class="my-1">
@@ -38,8 +35,6 @@
             </b-form-checkbox>
           </b-col>
         </b-row>
-        <!--        <h3 class="mb-3 text-left">Описание:{{taskInfo.description}}</h3>-->
-        <!--        <h3 class="mb-3 text-left"> Выполнено : <span v-show="taskInfo.state">Да</span> <span v-show="!taskInfo.state">Нет</span></h3>-->
       </b-card-text>
       <b-button v-if='taskInfo' variant="danger" class="mr-3" text rounded @click="deleteOneTask">Удалить</b-button>
       <b-button v-if="taskInfo" variant="success" :disabled="tempState===taskInfo" text rounded @click="saveUpdates()">Сохранить</b-button>
@@ -63,8 +58,6 @@ export default {
         state: false,
         category: this.$route.params.id
       }
-    // console.log(this.taskInfo, this.tempState, this.$route.params.id)
-
   },
   data: () => ({
     DELETE_TASK: DELETE_TASK,
