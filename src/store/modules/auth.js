@@ -24,6 +24,7 @@ export default {
 		},
 		async ['LOGOUT']({ state }) {
 			try {
+				console.log('logout')
 				await localVue.$API.post.Logout()
 				state.isLogin = false
 				localStorage.remove('ACCESS_TOKEN')

@@ -15,7 +15,7 @@
         <b-navbar-nav>
           <b-nav-item>
             <router-link active-class="active_link" to="/login" v-if="!isLoggedIn">Войти</router-link>
-            <router-link active-class="active_link" to="/" v-if="isLoggedIn" @click="logout()">Выйти</router-link>
+            <b-button v-if="isLoggedIn" @click="logout()">Выйти</b-button>
           </b-nav-item>
           <b-nav-item>
             <router-link active-class="active_link" to="/signUp" v-if="!isLoggedIn">Зарегистрироваться</router-link>

@@ -87,6 +87,9 @@ export default {
     },
     async addNewTask(){
       try{
+        this.tempState.category = this.$store.getters.tasksByCategory(this.tempState.category,'getKey')
+        // console.log(this.$store.getters.tasksByCategory(this.tempState.category),'here')
+        console.log(this.tempState,'this.tempState')
         await this.$store.dispatch(this.ADD_NEW_TASK,this.tempState)
         this.$router.go(-1)
       }catch (e) {

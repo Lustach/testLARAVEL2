@@ -126,9 +126,11 @@ export default new Vuex.Store({
 	getters: {
 		tasks: state => state.tasks,
 		categories: state => state.categories,
-		tasksByCategory: state => id => {
+		tasksByCategory: state => (id,getKey) => {
+			console.log(id,'id')
 			for (const key in state.tasks) {
 				if (state.tasks[key].title === id) {
+					if(getKey) return key
 					return state.tasks[key]
 				}
 			}
