@@ -4,6 +4,7 @@
     <h1 v-else>Добавление задачи</h1>
     {{ taskInfo }}fdas
     {{ tempState }}
+    {{tempState === taskInfo}}
     <b-card style="max-width: 500px;" v-if="tempState" class="d-flex align-self-center">
       <b-card-text>
         <b-row class="my-1">
@@ -41,7 +42,7 @@
         <!--        <h3 class="mb-3 text-left"> Выполнено : <span v-show="taskInfo.state">Да</span> <span v-show="!taskInfo.state">Нет</span></h3>-->
       </b-card-text>
       <b-button v-if='taskInfo' variant="danger" class="mr-3" text rounded @click="deleteOneTask">Удалить</b-button>
-      <b-button v-if="taskInfo" variant="success" :disabled="tempState===taskInfo.title" text rounded @click="saveUpdates()">Сохранить</b-button>
+      <b-button v-if="taskInfo" variant="success" :disabled="tempState===taskInfo" text rounded @click="saveUpdates()">Сохранить</b-button>
       <b-button v-if="!taskInfo" variant="success"  text rounded @click="addNewTask()">Добавить</b-button>
     </b-card>
   </div>
@@ -79,7 +80,7 @@ export default {
     async saveUpdates() {
       try {
         await this.$store.dispatch(this.UPDATE_TASK_STATE, { task: this.tempState, id: this.tempState.id })
-        this.$set(this.taskInfo, 'title', this.tempState)
+        this.$set(this.tasksByCategory(this.$route.params.id).tasks,this.tasksByCategory(this.$route.params.id).tasks.indexOf(this.taskInfo),this.tempState)
         this.$router.go(-1)
       } catch (e) {
         console.error(e)
@@ -88,7 +89,6 @@ export default {
     async addNewTask(){
       try{
         this.tempState.category = this.$store.getters.tasksByCategory(this.tempState.category,'getKey')
-        // console.log(this.$store.getters.tasksByCategory(this.tempState.category),'here')
         console.log(this.tempState,'this.tempState')
         await this.$store.dispatch(this.ADD_NEW_TASK,this.tempState)
         this.$router.go(-1)
