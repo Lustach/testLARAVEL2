@@ -3,7 +3,6 @@
     <div v-for="e in categories" :key="e">
         <router-link class="mx-5"  :to="'/tasks_by_category='+e">{{ e }}</router-link>
     </div>
-    <div v-if="show">allo</div>
   </div>
 </template>
 

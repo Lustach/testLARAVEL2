@@ -6,6 +6,7 @@ export const DELETE_TASK = 'delete/task'
 export const UPDATE_TASK_PLACE = 'update/task_place'
 export const UPDATE_TASK_STATE = 'update/task_state'
 export const GET_TASKS = 'get/AllTasks'
+export const ADD_NEW_TASK = 'add_new/task'
 const localVue = new Vue()
 Vue.use(Vuex)
 
@@ -69,13 +70,19 @@ export default new Vuex.Store({
 		},
 		async [UPDATE_TASK_STATE]({ commit, getters }, data) {
 			try {
-				await localVue.$API.patch.updateTask(data)
 				console.log(commit, getters, data, 'helloWorld')
+				await localVue.$API.patch.updateTask(data)
 			} catch (e) {
 				console.error(e)
 				throw e
 			}
+		},
+		async [ADD_NEW_TASK] ({commit},data){
+			const result = await localVue.$API.post.addNewTask(data)
+			commit(ADD_NEW_TASK,{data, result})
+			console.log(commit,data,result)
 		}
+
 	},
 	mutations: {
 		[DELETE_TASK](state, { data, getters }) {
@@ -101,6 +108,16 @@ export default new Vuex.Store({
 				this.dispatch(UPDATE_TASK_PLACE)
 			}
 			console.log(state.taskChange, 'stateTaskChange')
+		},
+		[ADD_NEW_TASK](state,{data,result}){
+			console.log(state,data,result,'HERE')
+			state.tasks[data.category].tasks.push({
+				title: data.title,
+				description: data.description,
+				state: data.state,
+				id: result.data.id
+			})
+			console.log(state.tasks[data.category],'afterADDNEWTASK')
 		}
 	},
 	modules: {

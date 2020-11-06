@@ -31,8 +31,9 @@ export default {
 				console.log(e)
 			}
 		},
-		async ['REGISTER']({ commit }, payload) {
+		async ['REGISTER']({ state,commit }, payload) {
 			const result = await localVue.$API.post.SignUp(payload)
+			state.isLogin = true
 			console.log(result, commit)
 			return result
 		},

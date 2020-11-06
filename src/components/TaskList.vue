@@ -1,5 +1,6 @@
 <template>
   <b-card :title="data.title || 'Заголовок'">
+    {{data}}
     <draggable :list="data.tasks" class="px-4" group="tasks" @change="onChange">
       <b-card-text v-for="(e,i) in data.tasks" :key="i" class="py-0 mb-2 test">
         <b-row class="d-flex align-center">
@@ -13,6 +14,7 @@
           </b-col>
         </b-row>
       </b-card-text>
+      <b-button variant="primary" @click="$router.push(`/tasks_by_category=${data.title}/title=NewTask`)">Добавить задачу</b-button>
     </draggable>
   </b-card>
 
