@@ -24,8 +24,8 @@ export default {
 		async ['LOGOUT']({ state }) {
 			try {
 				await localVue.$API.post.Logout()
-				state.isLogin = false
 				localStorage.removeItem('ACCESS_TOKEN')
+				state.isLogin = false
 			} catch (e) {
 				console.log(e)
 			}
@@ -38,9 +38,7 @@ export default {
 	},
 	mutations: {
 		setToken(state) {
-			if (localStorage.getItem('ACCESS_TOKEN')) {
-				state.isLogin = true
-			}
+			state.isLogin = !!localStorage.getItem('ACCESS_TOKEN');
 		}
 	},
 	getters: {
