@@ -12,9 +12,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		tasks: {
-
-		},
+		tasks: {},
 		categories: ['Все задачи', 'В процессе выполнения', 'Завершённые'],
 		taskChange: {
 			element: '0',
@@ -33,7 +31,7 @@ export default new Vuex.Store({
 				console.error(e)
 			}
 		},
-		async [GET_TASKS]({state}){
+		async [GET_TASKS]({ state }) {
 			const result = await localVue.$API.get.AllTasks()
 			state.tasks = result.data
 		},
@@ -54,9 +52,9 @@ export default new Vuex.Store({
 				throw e
 			}
 		},
-		async [ADD_NEW_TASK] ({commit},data){
+		async [ADD_NEW_TASK]({ commit }, data) {
 			const result = await localVue.$API.post.addNewTask(data)
-			commit(ADD_NEW_TASK,{data, result})
+			commit(ADD_NEW_TASK, { data, result })
 		}
 
 	},
@@ -83,7 +81,7 @@ export default new Vuex.Store({
 				this.dispatch(UPDATE_TASK_PLACE)
 			}
 		},
-		[ADD_NEW_TASK](state,{data,result}){
+		[ADD_NEW_TASK](state, { data, result }) {
 			state.tasks[data.category].tasks.push({
 				title: data.title,
 				description: data.description,
@@ -99,10 +97,10 @@ export default new Vuex.Store({
 	getters: {
 		tasks: state => state.tasks,
 		categories: state => state.categories,
-		tasksByCategory: state => (id,getKey) => {
+		tasksByCategory: state => (id, getKey) => {
 			for (const key in state.tasks) {
 				if (state.tasks[key].title === id) {
-					if(getKey) return key
+					if (getKey) return key
 					return state.tasks[key]
 				}
 			}

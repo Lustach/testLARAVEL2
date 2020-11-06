@@ -16,14 +16,26 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import {GET_TASKS} from "@/store"
+
 export default {
-  components:{
-    'TaskList': ()=> import('@/components/TaskList.vue')
+  components: {
+    'TaskList': () => import('@/components/TaskList.vue')
   },
   name: 'HelloWorld',
   props: {
     msg: String
   },
+  async mounted() {
+    try {
+      await this.$store.dispatch(GET_TASKS)
+    } catch (e) {
+      console.error(e)
+    }
+  },
+  data: () => ({
+    GET_TASKS: GET_TASKS
+  }),
   computed: {
     ...mapGetters([
       'tasks'

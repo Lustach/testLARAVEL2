@@ -25,7 +25,7 @@ export default {
 			try {
 				await localVue.$API.post.Logout()
 				state.isLogin = false
-				localStorage.remove('ACCESS_TOKEN')
+				localStorage.removeItem('ACCESS_TOKEN')
 			} catch (e) {
 				console.log(e)
 			}
